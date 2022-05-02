@@ -1,0 +1,42 @@
+
+.header {
+  &__home-btn {
+    img {
+      width: 50px;
+    }
+  }
+
+  &__title {
+    &.MuiTypography-root {
+      font-family: MenyakaBold, serif;
+      color: #2d4f30;
+      font-size: 20px;
+    }
+  }
+
+  &__country {
+    &.MuiChip-root {
+      background-color: #fcb44f;
+    }
+
+    .MuiChip-label {
+      font-family: MenyakaBold, serif;
+      color: #935600;
+      font-size: 20px;
+    }
+  }
+
+  &.MuiAppBar-root {
+    background-color: #77923b;
+    box-shadow: unset;
+  }
+
+  .MuiToolbar-root {
+    justify-content: space-between;
+  }
+}
+
+.logo-block {
+  display: flex;
+  align-items: center;
+}

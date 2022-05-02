@@ -1,0 +1,19 @@
+@use '../../styles/shared' as *;
+
+.country-page {
+  display: contents;
+  position: relative;
+
+  &__title{
+    @include flex();
+
+    background-color: #fcb44f;
+    color: #935600;
+    width: 60%;
+    min-height: 35px;
+
+    font-family: MenyakaBold, serif;
+    font-size: 25px;
+    margin: 10px 0;
+  }
+}

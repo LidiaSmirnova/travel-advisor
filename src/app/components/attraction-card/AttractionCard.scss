@@ -1,0 +1,31 @@
+
+.attraction {
+  .MuiCardContent-root {
+    background-color: #466634;
+    padding: 7px;
+  }
+
+  &__name,
+  &__rating,
+  &__review-number {
+    font-family: MenyakaBold, serif;
+    color: white;
+  }
+
+  &__name {
+    font-size: 20px;
+  }
+
+  &__rating {
+    .MuiSvgIcon-root {
+      color: #fcb44f;
+    }
+  }
+
+  &__metrics,
+  &__rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

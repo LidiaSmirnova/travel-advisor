@@ -1,0 +1,28 @@
+.country-select {
+  &.MuiAutocomplete-root {
+    width: 400px;
+  }
+
+  .MuiOutlinedInput-root,
+  .MuiOutlinedInput-root.Mui-focused {
+    .MuiOutlinedInput-notchedOutline {
+      border: 2px solid #77923b;
+      border-radius: 30px;
+    }
+
+    &:hover {
+      .MuiOutlinedInput-notchedOutline {
+        border: 2px solid #dfc742;
+        border-radius: 30px;
+      }
+    }
+  }
+
+  .MuiInputLabel-root,
+  .MuiSvgIcon-root,
+  .MuiOutlinedInput-input,
+  .MuiInputLabel-root.Mui-focused {
+    color: #77923b;
+    font-family: MenyakaBold, serif;
+  }
+}

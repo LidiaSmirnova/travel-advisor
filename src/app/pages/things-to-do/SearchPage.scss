@@ -1,0 +1,12 @@
+@use "../../styles/shared" as *;
+
+.search-page {
+  @include flex($flex-direction: column, $justify-content: flex-start);
+  height: 100%;
+
+  &__img {
+    width: 60vw;
+    margin-top: -46px;
+    margin-bottom: 15vh;
+  }
+}

@@ -1,0 +1,49 @@
+@use "../../styles/shared" as *;
+
+.home-page {
+  @include flex($flex-direction: column);
+  height: 100%;
+}
+
+.home-page__btn {
+  &.MuiButton-root {
+    width: 330px;
+    color: #ebb458;
+    font-size: 18px;
+    font-weight: bold;
+    border: 3px solid #ebb458;
+    border-radius: 30px;
+
+    &:hover {
+      color: #77923b;
+      border: 3px solid #77923b;
+      background-color: unset;
+    }
+  }
+}
+
+.logo {
+  @include flex($flex-direction: column);
+
+  width: 100%;
+  margin-bottom: 25px;
+
+  &__image {
+    width: 15em;
+  }
+
+  &__text-wrapper {
+    @include flex($flex-direction: column);
+
+    font-size: 70px;
+    font-family: MenyakaBold, serif;
+    color: #77923b;
+    margin-top: -10px;
+  }
+
+  &__text-part {
+    font-size: 80px;
+    margin-top: -25px;
+    text-transform: uppercase;
+  }
+}
