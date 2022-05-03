@@ -9,11 +9,17 @@
 
     background-color: #fcb44f;
     color: #935600;
-    width: 60%;
     min-height: 35px;
 
     font-family: MenyakaBold, serif;
     font-size: 25px;
-    margin: 10px 0;
+    margin: 12px 0;
+  }
+
+  &__title-wrapper{
+    background-color: #292929;
+    position: fixed;
+    margin-top: 66px;
+    width: 60%;
   }
 }

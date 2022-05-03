@@ -1,5 +1,5 @@
-import {AttractionsState} from "./AttractionsTypes";
+import {PlacesState} from "./PlacesTypes";
 
 export interface AppState {
-    attractions: AttractionsState;
+    places: PlacesState
 }

@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({countryName}) => {
         <AppBar position="static" className="header">
             <Toolbar>
                 <div className="logo-block">
-                    <IconButton className="header__home-btn" onClick={() => navigate("/")}>
+                    <IconButton className="header__home-btn" onClick={() => navigate("/things-to-do")}>
                         <img alt="logo" src={koala}/>
                     </IconButton>
                     <Typography component="div" className="header__title">

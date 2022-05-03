@@ -1,7 +1,0 @@
-@use '../../styles/shared' as *;
-
-.attractions {
-  @include flex($justify-content: space-evenly, $flex-wrap: wrap);
-  max-width: 60%;
-  gap: 15px;
-}

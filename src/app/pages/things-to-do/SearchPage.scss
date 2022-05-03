@@ -5,8 +5,9 @@
   height: 100%;
 
   &__img {
+    position: sticky;
     width: 60vw;
-    margin-top: -46px;
+    margin-top: 15px;
     margin-bottom: 15vh;
   }
 }

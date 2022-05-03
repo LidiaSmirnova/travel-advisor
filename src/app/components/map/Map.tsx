@@ -1,100 +1,48 @@
 /*global google*/
-
-import * as React from "react";
-import {createCustomEqual} from "fast-equals";
-import {useEffect, useRef, useState} from "react";
-import {isLatLngLiteral} from "@googlemaps/typescript-guards";
+import React, {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {useParams} from "react-router-dom";
+import {findThingsToDo} from "../../services/GoogleMapService";
+import {AppDispatch} from "../../../index";
+import {retroMapStyle} from "./MapStyles";
 
 import "./Map.scss";
 
-interface MapProps extends google.maps.MapOptions {
-    style: { [key: string]: string };
-    onClick?: (e: google.maps.MapMouseEvent) => void;
-    onIdle?: (map: google.maps.Map) => void;
-    children?: React.ReactNode;
-}
+let map: google.maps.Map;
 
-const Map: React.FC<MapProps> = ({
-                                    onClick,
-                                    onIdle,
-                                    children,
-                                    style,
-                                    ...options
-                                }) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [map, setMap] = useState<google.maps.Map>();
+export default function Map() {
+    const {country} = useParams();
+    const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {
-        if (ref.current && !map) {
-            setMap(new window.google.maps.Map(ref.current, {}));
-        }
-    }, [ref, map]);
+    const onScriptLoad = () => {
+        initializeMap();
+        dispatch(findThingsToDo(country, map));
+    }
 
-    useDeepCompareEffectForMaps(() => {
-        if (map) {
-            map.setOptions(options);
-        }
-    }, [map, options]);
+    const initializeMap = () => {
+        map = new window.google.maps.Map(
+            document.getElementById("map") as HTMLElement,
+            {
+                zoom: 8,
+            });
 
-    useEffect(() => {
-        if (map) {
-            ["click", "idle"].forEach((eventName) =>
-                google.maps.event.clearListeners(map, eventName)
-            );
+        // @ts-ignore
+        map.setOptions({styles: retroMapStyle});
+    }
 
-            if (onClick) {
-                map.addListener("click", onClick);
-            }
+    const loadPlacesLibrary = () => {
+        const s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = `https://maps.google.com/maps/api/js?key=AIzaSyDNEAYHc5IFLOzJvo91RIoazgm0f_Ig2_c&libraries=places&language=en`;
 
-            if (onIdle) {
-                map.addListener("idle", () => onIdle(map));
-            }
-        }
-    }, [map, onClick, onIdle]);
+        const x: HTMLElement = document.getElementsByTagName('script')[0];
+        x.parentNode?.insertBefore(s, x);
+        s.addEventListener('load', () => onScriptLoad());
+    }
+
+    useEffect(() => !window.google ? loadPlacesLibrary() : onScriptLoad(), [window.google]);
 
     return (
-        <>
-            < div ref={ref} style={style} className="map" id="map"/>
-            {
-                React.Children.map(children, (child) => {
-                    if (React.isValidElement(child)) {
-                        // set the map prop on the child component
-                        return React.cloneElement(child, {map});
-                    }
-                })
-            }
-        </>)
-        ;
+        <div id="map" className="map"/>
+    );
 }
-
-const deepCompareEqualsForMaps = createCustomEqual(
-    (deepEqual: (arg0: any, arg1: any) => any) => (a: any, b: any) => {
-        if (
-            isLatLngLiteral(a) ||
-            a instanceof google.maps.LatLng ||
-            isLatLngLiteral(b) ||
-            b instanceof google.maps.LatLng
-        ) {
-            return new google.maps.LatLng(a).equals(new google.maps.LatLng(b));
-        }
-
-        return deepEqual(a, b);
-    }
-);
-
-function useDeepCompareMemoize(value: any) {
-    const ref = React.useRef();
-
-    if (!deepCompareEqualsForMaps(value, ref.current)) {
-        ref.current = value;
-    }
-
-    return ref.current;
-}
-
-function useDeepCompareEffectForMaps(callback: React.EffectCallback, dependencies: any[]) {
-    React.useEffect(callback, dependencies.map(useDeepCompareMemoize));
-}
-
-export default Map;
-

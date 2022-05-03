@@ -1,2 +1,2 @@
 
-export const ADD_ATTRACTIONS = "ADD_ATTRACTIONS";
+export const ADD_PLACES = "ADD_PLACES";

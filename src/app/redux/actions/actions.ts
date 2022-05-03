@@ -1,10 +1,9 @@
-import {ADD_ATTRACTIONS} from "../types/actionTypes";
-import {Attraction} from "../types/AttractionsTypes";
+import {ADD_PLACES} from "../types/actionTypes";
+import {Place} from "../types/PlacesTypes";
 
-export function addAttractions(attractions: Attraction[]) {
-    console.log(attractions)
+export function addPlaces(places: Place[]) {
     return {
-        type: ADD_ATTRACTIONS,
-        attractions
+        type: ADD_PLACES,
+        places
     }
 }

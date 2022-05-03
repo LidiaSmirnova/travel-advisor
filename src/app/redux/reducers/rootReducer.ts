@@ -1,9 +1,9 @@
-import {combineReducers, Reducer} from "redux";
-import {AppState} from "../types/AppState";
-import attractionReducer from "./attractionReducer";
+import {combineReducers, Reducer} from 'redux';
+import {AppState} from '../types/AppState';
+import placeReducer from "./placeReducer";
 
 const rootReducer: Reducer<AppState> = combineReducers<AppState>({
-    attractions: attractionReducer
+    places: placeReducer
 });
 
 export default rootReducer;

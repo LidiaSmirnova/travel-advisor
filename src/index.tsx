@@ -1,11 +1,13 @@
 import React from 'react';
+import {Provider} from "react-redux";
 import ReactDOM from 'react-dom/client';
-import './app/index.scss';
+import {configureStore} from "@reduxjs/toolkit";
+
 import App from './app/App';
 import reportWebVitals from './app/reportWebVitals';
-import {Provider} from "react-redux";
 import rootReducer from "./app/redux/reducers/rootReducer";
-import {configureStore} from "@reduxjs/toolkit";
+
+import './app/index.scss';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -13,13 +15,11 @@ const root = ReactDOM.createRoot(
 const store = configureStore({
     reducer: rootReducer
 });
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;
 
 root.render(
     <Provider store={store}>
-        <React.StrictMode>
-            <App/>
-        </React.StrictMode>
+        <App/>
     </Provider>
 );
 
