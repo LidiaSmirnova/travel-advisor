@@ -16,3 +16,8 @@ export function removeLine(): void {
     const path = polyline?.getPath();
     path.clear();
 }
+
+export function pushLocationToPath(event: google.maps.MapMouseEvent) {
+    const path = polyline.getPath();
+    path.push(event.latLng);
+}

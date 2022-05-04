@@ -7,13 +7,13 @@ import PlaceCard from "../place-card/PlaceCard";
 import "./Places.scss";
 
 function Places() {
-    const places = useSelector((state: AppState) => state.places.places);
+    const {places} = useSelector((state: AppState) => state.places);
 
     return (
         <div className="places">
             {
-                places.map((place: Place, id: number) => {
-                    return <PlaceCard place={place} key={id}/>
+                places.map((place: Place) => {
+                    return <PlaceCard place={place} key={place.placeId}/>
                 })
             }
         </div>

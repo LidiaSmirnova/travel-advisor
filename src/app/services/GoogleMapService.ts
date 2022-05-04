@@ -5,6 +5,7 @@ import {mapToPlaces} from "../utils/PlaceMapper";
 import {AppDispatch} from "../../index";
 import {createMarker} from "./MarkerService";
 import {initializePolyline} from "./PolylineService";
+import {initializeInfoWindow} from "./InfoWindowService";
 
 export function findThingsToDo(country: string | undefined, map: google.maps.Map) {
     const service = new google.maps.places.PlacesService(map);
@@ -27,8 +28,10 @@ export function findThingsToDo(country: string | undefined, map: google.maps.Map
                         map.setCenter(center);
                     }
 
-                    const polyline = initializePolyline(map);
-                    results.forEach(place => createMarker(place, map, polyline));
+                    initializePolyline(map);
+                    initializeInfoWindow();
+
+                    results.forEach(place => createMarker(place, map,dispatch));
                 }
             }
         );

@@ -5,7 +5,7 @@ export function mapToPlaces(places: google.maps.places.PlaceResult[]): Place[] {
     return places.map(place => mapToPlace(place));
 }
 
-function mapToPlace(place: google.maps.places.PlaceResult): Place {
+export function mapToPlace(place: google.maps.places.PlaceResult): Place {
     return {
         formattedAddress: place.formatted_address || "",
         geometry: {

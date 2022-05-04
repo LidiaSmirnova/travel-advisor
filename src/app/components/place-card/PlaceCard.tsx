@@ -1,7 +1,9 @@
 import * as React from "react";
+import {useSelector} from "react-redux";
 import {Card, CardActionArea, CardContent, CardMedia} from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
 import {Place} from "../../redux/types/PlacesTypes";
+import {AppState} from "../../redux/types/AppState";
 
 import "./PlaceCard.scss"
 
@@ -10,14 +12,21 @@ interface AttractionCardProps {
 }
 
 const PlaceCard: React.FC<AttractionCardProps> = ({place}) => {
+    const {activePlace} = useSelector((state: AppState) => state.places);
+
+    const getClasses = () => {
+        const isPlaceActive = activePlace?.placeId == place.placeId;
+        return isPlaceActive ? "place place--active" : "place";
+    }
+
     return (
-        <Card className="place">
+        <Card className={getClasses()} id={place.placeId}>
             <CardActionArea>
                 <CardMedia
                     component="img"
                     height="220"
                     image={place.photoUrl}
-                    alt="green iguana"
+                    alt="place img"
                 />
                 <CardContent>
                     <div className="place__name">{place.name}</div>

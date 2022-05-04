@@ -1,5 +1,9 @@
 
 .place {
+  &.MuiCard-root{
+    border-radius: 10px;
+  }
+
   .MuiCardContent-root {
     background-color: #466634;
     padding: 7px;
@@ -27,5 +31,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.place--active {
+  .MuiCardContent-root {
+    background-color: #bb6223;
   }
 }
