@@ -1,8 +1,25 @@
-.map {
+#map {
   width: 40%;
   position: fixed !important;
   margin-top: 66px;
   right: 0;
   top: 0;
   bottom: 0;
+}
+
+#panel {
+  position: absolute;
+  top: 76px;
+  right: 15%;
+  z-index: 5;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+
+  .MuiButton-root{
+    height: 40px;
+    background-color: white;
+    color: #2d4f30;
+    border-color: #dfd2ae;
+  }
 }

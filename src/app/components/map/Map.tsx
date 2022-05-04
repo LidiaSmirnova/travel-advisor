@@ -7,6 +7,8 @@ import {AppDispatch} from "../../../index";
 import {retroMapStyle} from "./MapStyles";
 
 import "./Map.scss";
+import {Button, ButtonGroup} from "@mui/material";
+import {removeLine} from "../../services/PolylineService";
 
 let map: google.maps.Map;
 
@@ -23,11 +25,14 @@ export default function Map() {
         map = new window.google.maps.Map(
             document.getElementById("map") as HTMLElement,
             {
-                zoom: 8,
+                zoom: 7,
+                mapTypeControl: false,
+                streetViewControl: false
             });
 
         // @ts-ignore
         map.setOptions({styles: retroMapStyle});
+        document.getElementById("remove-line")!.addEventListener("click", removeLine);
     }
 
     const loadPlacesLibrary = () => {
@@ -43,6 +48,11 @@ export default function Map() {
     useEffect(() => !window.google ? loadPlacesLibrary() : onScriptLoad(), [window.google]);
 
     return (
-        <div id="map" className="map"/>
+        <div>
+            <div id="map"/>
+            <ButtonGroup id="panel" variant="contained" aria-label="outlined primary button group">
+                <Button id="remove-line">Remove line</Button>
+            </ButtonGroup>
+        </div>
     );
 }
