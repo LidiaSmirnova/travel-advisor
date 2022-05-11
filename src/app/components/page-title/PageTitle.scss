@@ -1,0 +1,22 @@
+@use '../../styles/shared' as *;
+
+.page-title {
+  background-color: #292929;
+  position: fixed;
+
+  width: 60%;
+  top: 66px;
+
+  &__content {
+    @include flex();
+
+    min-height: 35px;
+    margin: 12px 0;
+
+    font-family: MenyakaBold, serif;
+    font-size: 25px;
+
+    background-color: #fcb44f;
+    color: #935600;
+  }
+}

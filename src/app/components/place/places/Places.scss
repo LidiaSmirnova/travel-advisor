@@ -1,0 +1,8 @@
+@use '../../../styles/shared' as *;
+
+.places {
+  @include flex($flex-wrap: wrap);
+  max-width: 60%;
+  gap: 10px;
+  margin: 0 10px;
+}

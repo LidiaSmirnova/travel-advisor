@@ -20,10 +20,11 @@ export interface Place {
 export interface PlacesState {
     places: Place[];
     activePlace: Place | null;
+    tripPlan: Place[]
 }
 
 export interface PlaceAction {
     type: string;
     places: Place[];
-    activePlace: Place;
+    place: Place;
 }

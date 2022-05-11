@@ -1,23 +1,44 @@
 /*global google*/
 import {Place} from "../redux/types/PlacesTypes";
+import {StubPlaceResult} from "../services/StubPlaceResult";
 
-export function mapToPlaces(places: google.maps.places.PlaceResult[]): Place[] {
-    return places.map(place => mapToPlace(place));
+export function mapToPlaces(results: google.maps.places.PlaceResult[]): Place[] {
+    return results.map((result) => {
+        let place = mapToPlace(result);
+        enrichWithPhotoUrl(place, result);
+        return place;
+    });
 }
 
-export function mapToPlace(place: google.maps.places.PlaceResult): Place {
-    return {
+export function mapToStubPlaces(results: StubPlaceResult[]): Place[] {
+    return results.map((result) => {
+        let place = mapToPlace(result);
+        enrichWithStubPhotoUrl(place, result);
+        return place;
+    });
+}
+
+
+function mapToPlace(place: google.maps.places.PlaceResult | StubPlaceResult): Place {
+    return <Place>{
         formattedAddress: place.formatted_address || "",
         geometry: {
             location: {
-                lat: place.geometry?.location.lat() || 0,
-                lng: place.geometry?.location.lng() || 0
+                lat: place.geometry?.location.lat,
+                lng: place.geometry?.location.lng
             }
         },
         name: place.name || "",
-        photoUrl: place.photos?.at(0)?.getUrl({}) || "",
         placeId: place.place_id || "",
         rating: place.rating || 0,
         userRatingsTotal: place.user_ratings_total || 0
     }
+}
+
+function enrichWithPhotoUrl(place: Place, placeResult: google.maps.places.PlaceResult) {
+    place.photoUrl = placeResult.photos?.at(0)?.getUrl({}) || "";
+}
+
+function enrichWithStubPhotoUrl(place: Place, placeResult: StubPlaceResult) {
+    place.photoUrl = placeResult.photos?.at(0)?.raw_reference.fife_url || "";
 }

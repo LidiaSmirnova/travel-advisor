@@ -4,22 +4,34 @@
   display: contents;
   position: relative;
 
-  &__title{
-    @include flex();
-
-    background-color: #fcb44f;
-    color: #935600;
-    min-height: 35px;
-
-    font-family: MenyakaBold, serif;
-    font-size: 25px;
-    margin: 12px 0;
+  &__wrapper {
+    margin-top: 126px;
   }
 
-  &__title-wrapper{
+  &__footer-wrapper {
+    @include flex();
+    position: sticky;
+    bottom: 0;
+
     background-color: #292929;
-    position: fixed;
-    margin-top: 66px;
     width: 60%;
+  }
+
+  &__footer-btn {
+    @include flex();
+
+    min-height: 35px;
+    margin: 12px 0;
+    font-family: MenyakaBold, serif;
+    width: 40%;
+    color: white;
+    font-size: 20px;
+    border-radius: 15px;
+    background-color: #2d4f30;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #76913a;
+    }
   }
 }

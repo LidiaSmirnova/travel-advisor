@@ -1,0 +1,27 @@
+.plan-item {
+
+  .MuiTypography-root {
+    font-family: MenyakaBold, serif;
+    color: #2d4f30;
+    font-size: 15px;
+  }
+
+  .MuiListItemText-root {
+    flex-grow: 2;
+  }
+
+  &.MuiListItem-root {
+    padding: 0 20px;
+  }
+
+  .MuiButtonBase-root {
+    max-width: 40px;
+    display: flex;
+    justify-content: center;
+
+    .MuiListItemIcon-root {
+      color: #2d4f30;
+      min-width: unset;
+    }
+  }
+}

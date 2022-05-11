@@ -1,32 +1,48 @@
 /*global google*/
-import {AppDispatch} from "../../index";
-import {setActivePlace} from "../redux/actions/actions";
-import {mapToPlace} from "../utils/PlaceMapper";
-import {pushLocationToPath} from "./PolylineService";
+import store, {AppDispatch} from "../../index";
 import {showPlaceInfo} from "./InfoWindowService";
+import {Place} from "../redux/types/PlacesTypes";
+import {ViewMode} from "../redux/types/AppModeTypes";
+import {addPlaceToPlan, setActivePlace} from "../redux/actions/placeActions";
 
-export function createMarker(place: google.maps.places.PlaceResult,
-                             map: google.maps.Map,
-                             dispatch: AppDispatch) {
+let markers: google.maps.Marker[] = [];
+
+export const initializeMarkers = (places: Place[],
+                                  dispatch: AppDispatch,
+                                  map: google.maps.Map) => {
+    markers = places.map(place => createMarker(place, dispatch, map));
+}
+
+export const createMarker = (place: Place,
+                             dispatch: AppDispatch,
+                             map: google.maps.Map): google.maps.Marker => {
     const marker = new google.maps.Marker({
         map,
         position: place?.geometry?.location
     });
 
     google.maps.event.addListener(marker, "mouseover", () => {
-        showPlaceInfo(mapToPlace(place), marker, map);
+        showPlaceInfo(place, marker, map);
     });
 
-    google.maps.event.addListener(marker, "click", (event: google.maps.MapMouseEvent) => {
-        dispatch(setActivePlace(mapToPlace(place)));
-        pushLocationToPath(event);
+    google.maps.event.addListener(marker, "click", () => {
+        if (store.getState().appModes.viewMode === ViewMode.BUILDER) {
+            dispatch(addPlaceToPlan(place));
+        }
 
-        document?.getElementById(place.place_id || "")?.scrollIntoView({block: "center", behavior: "smooth"});
+        dispatch(setActivePlace(place));
+        document?.getElementById(place.placeId || "")?.scrollIntoView({block: "center", behavior: "smooth"});
     });
 
-    document?.getElementById(place.place_id || "")?.addEventListener("click", () => {
-        const activePlace = mapToPlace(place);
-        dispatch(setActivePlace(activePlace));
-        showPlaceInfo(activePlace, marker, map);
+    store.subscribe(() => {
+        if (store.getState().places.activePlace?.placeId == place.placeId) {
+            showPlaceInfo(place, marker, map);
+        }
     });
+
+    return marker;
+}
+
+export const toggleMarkers = (map: google.maps.Map) => {
+    markers.forEach((marker) => marker.getMap() ? marker.setMap(null) : marker.setMap(map));
 }

@@ -5,20 +5,28 @@ import {useParams} from "react-router-dom";
 import {findThingsToDo} from "../../services/GoogleMapService";
 import {AppDispatch} from "../../../index";
 import {retroMapStyle} from "./MapStyles";
+import MarkersControl from "./MarkersControl";
+import {APP_KEY} from "../../../env/app-key";
 
 import "./Map.scss";
-import {Button, ButtonGroup} from "@mui/material";
-import {removeLine} from "../../services/PolylineService";
+
 
 let map: google.maps.Map;
 
-export default function Map() {
+function Map() {
     const {country} = useParams();
     const dispatch = useDispatch<AppDispatch>();
 
     const onScriptLoad = () => {
         initializeMap();
         dispatch(findThingsToDo(country, map));
+    }
+
+    const addMapControl = () => {
+        const markersControlDiv = document.createElement("div");
+        MarkersControl(markersControlDiv, map);
+
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(markersControlDiv);
     }
 
     const initializeMap = () => {
@@ -32,13 +40,13 @@ export default function Map() {
 
         // @ts-ignore
         map.setOptions({styles: retroMapStyle});
-        document.getElementById("remove-line")!.addEventListener("click", removeLine);
+        addMapControl();
     }
 
     const loadPlacesLibrary = () => {
         const s = document.createElement('script');
         s.type = 'text/javascript';
-        s.src = `https://maps.google.com/maps/api/js?key=AIzaSyDNEAYHc5IFLOzJvo91RIoazgm0f_Ig2_c&libraries=places&language=en`;
+        s.src = `https://maps.google.com/maps/api/js?key=${APP_KEY}&libraries=places&language=en`;
 
         const x: HTMLElement = document.getElementsByTagName('script')[0];
         x.parentNode?.insertBefore(s, x);
@@ -47,12 +55,7 @@ export default function Map() {
 
     useEffect(() => !window.google ? loadPlacesLibrary() : onScriptLoad(), [window.google]);
 
-    return (
-        <div>
-            <div id="map"/>
-            <ButtonGroup id="panel" variant="contained" aria-label="outlined primary button group">
-                <Button id="remove-line">Remove line</Button>
-            </ButtonGroup>
-        </div>
-    );
+    return <div id="map"/>;
 }
+
+export default Map;

@@ -1,39 +1,65 @@
 /*global google*/
-import {Place} from "../redux/types/PlacesTypes";
-import {addPlaces} from "../redux/actions/actions";
-import {mapToPlaces} from "../utils/PlaceMapper";
+import {mapToPlaces, mapToStubPlaces} from "../utils/PlaceMapper";
 import {AppDispatch} from "../../index";
-import {createMarker} from "./MarkerService";
-import {initializePolyline} from "./PolylineService";
+import {environment} from "../../env/environment";
+import {ApiMode} from "../redux/types/AppModeTypes";
 import {initializeInfoWindow} from "./InfoWindowService";
+import {initializePolyline} from "./PolylineService";
+import {initializeMarkers} from "./MarkerService";
+import {addPlaces} from "../redux/actions/placeActions";
+import {Place} from "../redux/types/PlacesTypes";
+
+const {apiMode, apiUrl} = environment;
 
 export function findThingsToDo(country: string | undefined, map: google.maps.Map) {
+    return (dispatch: AppDispatch) => {
+        if (apiMode == ApiMode.REAL_API) {
+            makeRealCall(country, dispatch, map);
+        } else {
+            makeFakeCall(dispatch, map);
+        }
+    }
+}
+
+const makeRealCall = (country: string | undefined,
+                      dispatch: AppDispatch,
+                      map: google.maps.Map) => {
     const service = new google.maps.places.PlacesService(map);
     const request = {query: `Things to do ${country}`};
-    let places: Place[];
 
-    return (dispatch: AppDispatch) => {
-        service.textSearch(
-            request,
-            (
-                results: google.maps.places.PlaceResult[] | null,
-                status: google.maps.places.PlacesServiceStatus
-            ) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-                    places = mapToPlaces(results);
-                    dispatch(addPlaces(places));
-
-                    const center = places.at(0)?.geometry?.location;
-                    if (center) {
-                        map.setCenter(center);
-                    }
-
-                    initializePolyline(map);
-                    initializeInfoWindow();
-
-                    results.forEach(place => createMarker(place, map,dispatch));
-                }
+    return service.textSearch(
+        request,
+        (
+            results: google.maps.places.PlaceResult[] | null,
+            status: google.maps.places.PlacesServiceStatus
+        ) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                initializeMap(mapToPlaces(results), dispatch, map);
             }
-        );
+        }
+    )
+}
+
+const makeFakeCall = (dispatch: AppDispatch,
+                      map: google.maps.Map) => {
+    fetch(`${apiUrl}`, {
+        method: 'GET'
+    })
+        .then((response) => response.json())
+        .then((json) => initializeMap(mapToStubPlaces(json.results), dispatch, map));
+}
+
+const initializeMap = (places: Place[],
+                       dispatch: AppDispatch,
+                       map: google.maps.Map) => {
+    dispatch(addPlaces(places));
+
+    const center = places.at(0)?.geometry?.location;
+    if (center) {
+        map.setCenter(center);
     }
+
+    initializeMarkers(places, dispatch, map);
+    initializePolyline(map);
+    initializeInfoWindow();
 }

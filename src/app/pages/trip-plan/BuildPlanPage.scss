@@ -1,0 +1,63 @@
+@use '../../styles/shared' as *;
+
+.plan-page {
+  display: contents;
+  position: relative;
+
+  &__plan {
+    background-color: #c3d3bd;
+    border-radius: 10px;
+    margin: 0 10px 0 0;
+    flex-grow: 2;
+    min-height: 100vh;
+    height: fit-content;
+
+    align-items: flex-start;
+    position: sticky;
+    top: 126px;
+  }
+
+  &__builder {
+    display: flex;
+    width: 60%;
+    margin-top: 126px;
+  }
+}
+
+.plan {
+  &__title {
+    display: flex;
+    align-items: center;
+
+    font-family: MenyakaBold, serif;
+    font-size: 20px;
+    color: #2d4f30;
+    margin: 10px;
+  }
+
+  &__title-text {
+    justify-self: center;
+    flex-grow: 1;
+  }
+
+  &__mode-control {
+    .MuiSwitch-thumb {
+      color: #c3d3bd;
+      border: 1px solid #ffffffc7;
+    }
+
+    .Mui-checked .MuiSwitch-thumb {
+      color: #597558;
+      border: 1px solid #ffffffc7;
+    }
+
+    &.MuiFormControlLabel-root .MuiSwitch-root .MuiSwitch-track {
+      background-color: #547154;
+    }
+
+    .MuiTypography-root {
+      font-family: MenyakaBold, serif;
+      color: #597558;
+    }
+  }
+}
