@@ -1,10 +1,10 @@
 import * as React from "react";
-import {useDispatch} from "react-redux";
 import ClearIcon from '@mui/icons-material/Clear';
 import {ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {Place} from "../../../redux/types/PlacesTypes";
-import {removePlaceFromPlan} from "../../../redux/actions/placeActions";
-import {AppDispatch} from "../../../../index";
+
+import {Place} from "../../../types/PlaceType";
+import {useAppDispatch} from "../../../redux/hooks/hooks";
+import {removePlaceFromPlan} from "../../../redux/slices/placesSlice";
 
 import "./PlanItem.scss";
 
@@ -14,7 +14,7 @@ interface PlanItemProps {
 }
 
 const PlanItem: React.FC<PlanItemProps> = ({index, place}) => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const onRemoveItem = () => {
         dispatch(removePlaceFromPlan(place));

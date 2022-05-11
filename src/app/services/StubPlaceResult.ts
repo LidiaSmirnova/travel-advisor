@@ -1,4 +1,4 @@
-import {Geometry} from "../redux/types/PlacesTypes";
+import {Geometry} from "../types/PlaceType";
 
 interface RawReference {
     fife_url: string;

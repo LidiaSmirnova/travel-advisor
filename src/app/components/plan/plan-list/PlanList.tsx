@@ -1,13 +1,12 @@
 import * as React from "react";
-import {useSelector} from "react-redux";
 import {List} from "@mui/material";
 
-import {Place} from "../../../redux/types/PlacesTypes";
-import {AppState} from "../../../redux/types/AppState";
 import PlanItem from "../plan-item/PlanItem";
+import {Place} from "../../../types/PlaceType";
+import {useAppSelector} from "../../../redux/hooks/hooks";
 
 function PlanList(){
-    const {tripPlan} = useSelector((state: AppState) => state.places);
+    const {tripPlan} = useAppSelector(state => state.places);
 
     return (
         <List className="plan-list">

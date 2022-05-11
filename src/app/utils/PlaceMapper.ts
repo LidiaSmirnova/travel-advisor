@@ -1,5 +1,5 @@
 /*global google*/
-import {Place} from "../redux/types/PlacesTypes";
+import {Place} from "../types/PlaceType";
 import {StubPlaceResult} from "../services/StubPlaceResult";
 
 export function mapToPlaces(results: google.maps.places.PlaceResult[]): Place[] {

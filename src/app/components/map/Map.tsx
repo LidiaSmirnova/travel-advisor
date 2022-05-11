@@ -1,21 +1,19 @@
 /*global google*/
 import React, {useEffect} from "react";
-import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import {findThingsToDo} from "../../services/GoogleMapService";
-import {AppDispatch} from "../../../index";
 import {retroMapStyle} from "./MapStyles";
 import MarkersControl from "./MarkersControl";
 import {APP_KEY} from "../../../env/app-key";
+import {useAppDispatch} from "../../redux/hooks/hooks";
 
 import "./Map.scss";
-
 
 let map: google.maps.Map;
 
 function Map() {
     const {country} = useParams();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const onScriptLoad = () => {
         initializeMap();

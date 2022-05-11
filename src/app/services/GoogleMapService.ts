@@ -1,13 +1,14 @@
 /*global google*/
 import {mapToPlaces, mapToStubPlaces} from "../utils/PlaceMapper";
-import {AppDispatch} from "../../index";
 import {environment} from "../../env/environment";
-import {ApiMode} from "../redux/types/AppModeTypes";
 import {initializeInfoWindow} from "./InfoWindowService";
 import {initializePolyline} from "./PolylineService";
 import {initializeMarkers} from "./MarkerService";
-import {addPlaces} from "../redux/actions/placeActions";
-import {Place} from "../redux/types/PlacesTypes";
+
+import {ApiMode} from "../types/AppModeTypes";
+import {Place} from "../types/PlaceType";
+import {addPlaces} from "../redux/slices/placesSlice";
+import {AppDispatch} from "../redux/store";
 
 const {apiMode, apiUrl} = environment;
 

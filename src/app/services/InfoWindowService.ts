@@ -1,5 +1,5 @@
 /*global google*/
-import {Place} from "../redux/types/PlacesTypes";
+import {Place} from "../types/PlaceType";
 
 let infoWindow: google.maps.InfoWindow;
 

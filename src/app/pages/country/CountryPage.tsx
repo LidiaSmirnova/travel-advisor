@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 
 import Map from "../../components/map/Map";
@@ -8,16 +7,16 @@ import Header from "../../components/header/Header";
 import Places from "../../components/place/places/Places";
 import PageTitle from "../../components/page-title/PageTitle";
 
-import {AppDispatch} from "../../../index";
-import {ViewMode} from "../../redux/types/AppModeTypes";
-import {setViewMode} from "../../redux/actions/appModeActions";
+import {ViewMode} from "../../types/AppModeTypes";
+import {useAppDispatch} from "../../redux/hooks/hooks";
+import {setViewMode} from "../../redux/slices/appModesSlice";
 
 import "./CountryPage.scss";
 
 function CountryPage() {
     const {country} = useParams();
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     useEffect(()=>{
         dispatch(setViewMode(ViewMode.VIEW));

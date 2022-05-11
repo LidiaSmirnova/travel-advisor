@@ -1,13 +1,11 @@
 import * as React from "react";
-import {useDispatch, useSelector} from "react-redux";
 import {Card, CardActionArea, CardContent, CardMedia} from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
 
-import {addPlaceToPlan, setActivePlace} from "../../../redux/actions/placeActions";
-import {ViewMode} from "../../../redux/types/AppModeTypes";
-import {Place} from "../../../redux/types/PlacesTypes";
-import {AppState} from "../../../redux/types/AppState";
-import {AppDispatch} from "../../../../index";
+import {Place} from "../../../types/PlaceType";
+import {ViewMode} from "../../../types/AppModeTypes";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks/hooks";
+import {addPlaceToPlan, setActivePlace} from "../../../redux/slices/placesSlice";
 
 import "./PlaceCard.scss"
 
@@ -16,9 +14,9 @@ interface PlaceCardProps {
 }
 
 const PlaceCard: React.FC<PlaceCardProps> = ({place}) => {
-    const {activePlace} = useSelector((state: AppState) => state.places);
-    const {viewMode} = useSelector((state: AppState) => state.appModes);
-    const dispatch = useDispatch<AppDispatch>();
+    const {activePlace} = useAppSelector(state => state.places);
+    const {viewMode} = useAppSelector(state => state.appModes);
+    const dispatch = useAppDispatch();
 
     const getClasses = () => {
         const isPlaceActive = activePlace?.placeId == place.placeId;

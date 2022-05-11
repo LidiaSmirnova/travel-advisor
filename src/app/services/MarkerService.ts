@@ -1,9 +1,12 @@
 /*global google*/
-import store, {AppDispatch} from "../../index";
+import store from "../../index";
 import {showPlaceInfo} from "./InfoWindowService";
-import {Place} from "../redux/types/PlacesTypes";
-import {ViewMode} from "../redux/types/AppModeTypes";
-import {addPlaceToPlan, setActivePlace} from "../redux/actions/placeActions";
+
+import {Place} from "../types/PlaceType";
+import {ViewMode} from "../types/AppModeTypes";
+
+import {AppDispatch} from "../redux/store";
+import {addPlaceToPlan, setActivePlace} from "../redux/slices/placesSlice";
 
 let markers: google.maps.Marker[] = [];
 

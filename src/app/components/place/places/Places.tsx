@@ -1,8 +1,8 @@
 import * as React from "react";
-import {useSelector} from "react-redux";
-import {Place} from "../../../redux/types/PlacesTypes";
-import {AppState} from "../../../redux/types/AppState";
+
 import PlaceCard from "../place-card/PlaceCard";
+import {Place} from "../../../types/PlaceType";
+import {useAppSelector} from "../../../redux/hooks/hooks";
 
 import "./Places.scss";
 
@@ -11,7 +11,7 @@ interface PlacesProps {
 }
 
 const Places: React.FC<PlacesProps> = ({width}) => {
-    const {places} = useSelector((state: AppState) => state.places);
+    const {places} = useAppSelector(state => state.places);
     const style = {
         width: `${width}%`,
     };

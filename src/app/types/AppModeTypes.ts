@@ -12,13 +12,3 @@ export enum BuilderMode {
     AUTO,
     MANUAL,
 }
-
-export interface AppModesState {
-    viewMode: ViewMode
-    builderMode: BuilderMode
-}
-
-export interface AppModeAction {
-    type: string;
-    viewMode: ViewMode;
-}

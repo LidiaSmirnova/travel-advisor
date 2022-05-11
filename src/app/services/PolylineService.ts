@@ -1,7 +1,7 @@
 /*global google*/
 import store from "../../index";
-import {Place} from "../redux/types/PlacesTypes";
-import {BuilderMode, ViewMode} from "../redux/types/AppModeTypes";
+import {Place} from "../types/PlaceType";
+import {BuilderMode, ViewMode} from "../types/AppModeTypes";
 
 let polyline: google.maps.Polyline;
 

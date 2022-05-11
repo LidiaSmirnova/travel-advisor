@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import {FormControlLabel, Switch} from "@mui/material";
 
@@ -9,16 +8,16 @@ import Header from "../../components/header/Header";
 import Places from "../../components/place/places/Places";
 import PageTitle from "../../components/page-title/PageTitle";
 import PlanList from "../../components/plan/plan-list/PlanList";
-import {AppDispatch} from "../../../index";
 
-import {ViewMode} from "../../redux/types/AppModeTypes";
-import {setViewMode, switchBuilderMode} from "../../redux/actions/appModeActions";
+import {useAppDispatch} from "../../redux/hooks/hooks";
+import {ViewMode} from "../../types/AppModeTypes";
+import {setViewMode, switchBuilderMode} from "../../redux/slices/appModesSlice";
 
 import "./BuildPlanPage.scss";
 
 function BuildPlanPage() {
     const {country} = useParams();
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(setViewMode(ViewMode.BUILDER));
