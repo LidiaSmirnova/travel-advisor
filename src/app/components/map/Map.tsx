@@ -1,59 +1,65 @@
 /*global google*/
-import React, {useEffect} from "react";
-import {useParams} from "react-router-dom";
-import {findThingsToDo} from "../../services/GoogleMapService";
-import {retroMapStyle} from "./MapStyles";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { findThingsToDo } from "../../services/GoogleMapService";
+import { retroMapStyle } from "./MapStyles";
 import MarkersControl from "./MarkersControl";
-import {APP_KEY} from "../../../env/app-key";
-import {useAppDispatch} from "../../redux/hooks/hooks";
+import { APP_KEY } from "../../../env/app-key";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 
 import "./Map.scss";
 
 let map: google.maps.Map;
 
 function Map() {
-    const {country} = useParams();
-    const dispatch = useAppDispatch();
+  const { country } = useParams();
+  const dispatch = useAppDispatch();
 
-    const onScriptLoad = () => {
-        initializeMap();
-        dispatch(findThingsToDo(country, map));
-    }
+  const onScriptLoad = () => {
+    initializeMap();
+    dispatch(findThingsToDo(country, map));
+  };
 
-    const addMapControl = () => {
-        const markersControlDiv = document.createElement("div");
-        MarkersControl(markersControlDiv, map);
+  const addMapControl = () => {
+    const markersControlDiv = document.createElement("div");
+    MarkersControl(markersControlDiv, map);
 
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(markersControlDiv);
-    }
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+      markersControlDiv
+    );
+  };
 
-    const initializeMap = () => {
-        map = new window.google.maps.Map(
-            document.getElementById("map") as HTMLElement,
-            {
-                zoom: 7,
-                mapTypeControl: false,
-                streetViewControl: false
-            });
+  const initializeMap = () => {
+    map = new window.google.maps.Map(
+      document.getElementById("map") as HTMLElement,
+      {
+        zoom: 7,
+        mapTypeControl: false,
+        streetViewControl: false,
+      }
+    );
 
-        // @ts-ignore
-        map.setOptions({styles: retroMapStyle});
-        addMapControl();
-    }
+    // @ts-ignore
+    map.setOptions({ styles: retroMapStyle });
+    addMapControl();
+  };
 
-    const loadPlacesLibrary = () => {
-        const s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.src = `https://maps.google.com/maps/api/js?key=${APP_KEY}&libraries=places&language=en`;
+  const loadPlacesLibrary = () => {
+    const s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = `https://maps.google.com/maps/api/js?key=${APP_KEY}&libraries=places&language=en`;
 
-        const x: HTMLElement = document.getElementsByTagName('script')[0];
-        x.parentNode?.insertBefore(s, x);
-        s.addEventListener('load', () => onScriptLoad());
-    }
+    const x: HTMLElement = document.getElementsByTagName("script")[0];
+    x.parentNode?.insertBefore(s, x);
+    s.addEventListener("load", () => onScriptLoad());
+  };
 
-    useEffect(() => !window.google ? loadPlacesLibrary() : onScriptLoad(), [window.google]);
+  useEffect(
+    () => (!window.google ? loadPlacesLibrary() : onScriptLoad()),
+    [window.google]
+  );
 
-    return <div id="map"/>;
+  return <div id="map" />;
 }
 
 export default Map;

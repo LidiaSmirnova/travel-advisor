@@ -1,12 +1,12 @@
-import React from 'react';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import SearchPage from "./pages/things-to-do/SearchPage";
 import CountryPage from "./pages/country/CountryPage";
 import BuildPlanPage from "./pages/trip-plan/BuildPlanPage";
 import ErrorBoundary from "./components/error-boundary/ErrorBoundary";
 
-import './App.scss';
+import "./App.scss";
 
 function App() {
   return (

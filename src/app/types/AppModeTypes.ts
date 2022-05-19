@@ -1,14 +1,14 @@
 export enum ApiMode {
-    STUB_API = "stub-api",
-    REAL_API = "real-api",
+  STUB_API = "stub-api",
+  REAL_API = "real-api",
 }
 
 export enum ViewMode {
-    BUILDER,
-    VIEW,
+  BUILDER,
+  VIEW,
 }
 
 export enum BuilderMode {
-    AUTO,
-    MANUAL,
+  AUTO,
+  MANUAL,
 }
